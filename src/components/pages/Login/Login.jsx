@@ -9,9 +9,9 @@ const Login = () => {
     const {signIn} = useContext(AuthContext);
    const captchaRef = useRef(null);
    const [disable, setDisable] = useState(true)
-    useEffect(() =>{
-        loadCaptchaEnginge(6); 
-    },[])
+    // useEffect(() =>{
+    //     loadCaptchaEnginge(6); 
+    // },[])
 
 
     const handleLogin = (event) => {
@@ -27,14 +27,14 @@ const Login = () => {
         })
     }
 
-    const handlevalidateCaptch = (event) => {
-        const user_captcha_value = event.target.value
-        if (validateCaptcha(user_captcha_value)) {
-            setDisable(false);
-        } else {
-            setDisable(true)
-        }
-    }
+    // const handlevalidateCaptch = (event) => {
+    //     const user_captcha_value = event.target.value
+    //     if (validateCaptcha(user_captcha_value)) {
+    //         setDisable(false);
+    //     } else {
+    //         setDisable(true)
+    //     }
+    // }
     return (
         <div>
             <Helmet>
@@ -61,16 +61,16 @@ const Login = () => {
                                 <input name='password' type="password" placeholder="password" className="input input-bordered" required />
                                
                             </div>
-                            <div className="form-control">
+                            {/* <div className="form-control">
                                 <label className="label">
                                      <LoadCanvasTemplate />
                                 </label>
                                 <input onBlur={handlevalidateCaptch} name='captcha' type="text" placeholder="Type the captcha above" className="input input-bordered" required />
                                 
                                
-                            </div>
+                            </div> */}
                             <div className="form-control mt-6">
-                                <button disabled={disable} className="btn btn-primary">Login</button>
+                                <button  className="btn btn-primary">Login</button>
                             </div>
                         </form>
                         <p><small>New Here? <Link to={"/signup"}>Create account</Link> </small></p>

@@ -2,24 +2,50 @@ import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../provider/AuthProvider';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm()
+    const axiosPublic = useAxiosPublic();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-      const {createUser} = useContext(AuthContext)
-      const onSubmit = (data) => {
-        console.log(data)
+
+      const onSubmit = data => {
+
         createUser(data.email, data.password)
-        .then(res => {
-            const loggedUser = res.user 
-            console.log(loggedUser);
-        })
-        .catch(error => console.log(error.message))
-      }
+            .then(result => {
+                const loggedUser = result.user;
+                // console.log(loggedUser);
+                updateUserProfile(data.name, data.photoURL)
+                    .then(() => {
+                        // create user entry in the database
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user added to the database')
+                                    reset();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User created successfully.',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/');
+                                }
+                            })
+
+                    })
+                    .catch(error => console.log(error))
+            })
+    };
     
     return (
         <div>

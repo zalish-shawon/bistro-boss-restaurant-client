@@ -15,9 +15,9 @@ module.exports = {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
-      "rules": {
-        "padded-blocks": "off"
-      }
+      // "rules": {
+      //   "padded-blocks": "off"
+      // }
     ],
   },
 }

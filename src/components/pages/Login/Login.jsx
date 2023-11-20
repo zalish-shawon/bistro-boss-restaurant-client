@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../../provider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import Swal from 'sweetalert2';
 
 
 const Login = () => {
     const {signIn} = useContext(AuthContext);
+    const navigate = useNavigate();
    const captchaRef = useRef(null);
    const [disable, setDisable] = useState(true)
     // useEffect(() =>{
@@ -14,17 +16,27 @@ const Login = () => {
     // },[])
 
 
-    const handleLogin = (event) => {
-        event.preventDefault()
-        const form = event.target
-        const email = form.email.value 
-        const password = form.password.value
+    const handleLogin = event => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
         console.log(email, password);
-        signIn(email,password)
-        .then(res => {
-            const user = res.user
-            console.log(user);
-        })
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    title: 'User Login Successful.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+                navigate(from, { replace: true });
+            })
     }
 
     // const handlevalidateCaptch = (event) => {

@@ -7,6 +7,7 @@ import Menu from "../components/pages/Menu/Menu";
 import Order from "../components/pages/Order/Order";
 import Login from "../components/pages/Login/Login";
 import SignUp from "../components/pages/SignUp/SignUp";
+import Secret from "../components/pages/Secret/Secret";
 import DashBoard from "../Layout/DashBoard";
 import Cart from "../components/pages/DashBoard/Cart/Cart";
 import AllUsers from "../Layout/allUsers";
@@ -16,6 +17,9 @@ import AdminRoute from "./AdminRoute";
 import ManageItems from "../components/pages/DashBoard/ManageItems/ManageItems";
 import UpdateItem from "../components/pages/DashBoard/UpdateItem/UpdateItem";
 import Payment from "../components/pages/DashBoard/Payment/Payment";
+import PaymentHistory from "../components/pages/DashBoard/PaymentHistory/PaymentHistory";
+import UserHome from "../components/pages/DashBoard/UserHome/UserHome";
+import AdminHome from "../components/pages/DashBoard/AdminHome/AdminHome";
 
   export const router = createBrowserRouter([
     {
@@ -41,6 +45,10 @@ import Payment from "../components/pages/DashBoard/Payment/Payment";
         {
           path: "/signup",
           element: <SignUp></SignUp>
+        },
+        {
+          path: "/secret",
+          element: <Secret></Secret>
         }
       ]
     },
@@ -50,6 +58,10 @@ import Payment from "../components/pages/DashBoard/Payment/Payment";
       children: [
         // normal users routes
         {
+          path: "userHome",
+          element: <UserHome></UserHome>
+        },
+        {
           path: "cart",
           element: <Cart></Cart>
         },
@@ -57,7 +69,15 @@ import Payment from "../components/pages/DashBoard/Payment/Payment";
           path: "payment",
           element: <Payment></Payment>
         },
+        {
+          path:"paymentHistory",
+          element: <PaymentHistory></PaymentHistory>
+        },
         // admin routes
+        {
+          path: "adminHome",
+          element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+        },
         {
           path: "allUsers",
           element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
